@@ -47,29 +47,7 @@ java NetworkProClient
 
 ---
 
-## 📂 Project Structure
 
-```
-ChatApp/
-│
-├── server/
-│   ├── NetworkPro.java
-│   ├── ChatNow.java
-│
-├── client/
-│   ├── NetworkProClient.java
-│   ├── ChatClient.java
-│
-└── README.md
-```
-
----
-
-## 🚧 Project Status
-
-🔄 **Under Active Development**
-
----
 
 ## 🔥 Future Enhancements
 
