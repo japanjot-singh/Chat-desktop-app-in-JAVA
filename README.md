@@ -24,28 +24,3 @@ java NetworkPro
 2️⃣ Run Client
 javac NetworkProClient.java
 java NetworkProClient
-🔥 Future Enhancements
-👥 Multi-User Support
-Support multiple clients connecting to server simultaneously
-Broadcast messaging system
-User session handling
-🗄️ Database Integration
-Store user credentials (login/signup)
-Save chat history
-Use databases like:
-MySQL / PostgreSQL
-🎨 GUI Improvements
-Upgrade from AWT → Swing / JavaFX
-Modern chat interface (like WhatsApp/Discord)
-Message bubbles, timestamps
-🔐 Authentication System
-User login/signup
-Secure communication
-🌐 Advanced Features
-Group chat
-File sharing
-Online/offline status
-
-👨‍💻 Author
-
-Japanjot Singh
