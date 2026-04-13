@@ -130,7 +130,7 @@ class chatClient extends Frame implements ActionListener,TextListener{
         BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
         String sr;
         while((sr=br.readLine()) != null){
-            tar.setText(sr);
+            tar.append(sr +"\n");
         }
     }
     public void checkconn(){

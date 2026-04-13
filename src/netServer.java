@@ -173,7 +173,7 @@ class ChatNow extends Frame implements ActionListener,met,TextListener{
         BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
         String sr;
         while((sr=br.readLine()) != null){
-            tar.setText(sr);
+            tar.append(sr +"\n");
         }
     }
     public void paint(Graphics g){
