@@ -84,10 +84,10 @@ class netClient extends Frame implements ActionListener,metc {
 
     }
 }
-class chatClient extends Frame implements ActionListener{
+class chatClient extends Frame implements ActionListener,TextListener{
     Label ly,lo;
 
-    TextField ts,tr;
+    TextArea tas,tar;
 
     Button se,re;
 
@@ -101,21 +101,21 @@ class chatClient extends Frame implements ActionListener{
         ly=new Label("Send");
         lo=new Label("Recieve");
 
-        ts=new TextField(30);
-        tr=new TextField(30);
+        tas=new TextArea(10,5);
+        tar=new TextArea(10,5);
 
         se=new Button("Send");
         re=new Button("Recieve");
 
         this.add(ly);
-        this.add(ts);
+        this.add(tas);
         this.add(se);
         this.add(lo);
-        this.add(tr);
+        this.add(tar);
         this.add(re);
 
-        ts.addActionListener(this);
-        tr.addActionListener(this);
+        tas.addTextListener(this);
+        tar.addTextListener(this);
         se.addActionListener(this);
         re.addActionListener(this);
 
@@ -130,7 +130,7 @@ class chatClient extends Frame implements ActionListener{
         BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
         String sr;
         while((sr=br.readLine()) != null){
-            tr.setText(sr);
+            tar.setText(sr);
         }
     }
     public void checkconn(){
@@ -153,7 +153,7 @@ class chatClient extends Frame implements ActionListener{
 
         }
         if(ae.getSource() ==se){
-            String str=ts.getText();
+            String str=tas.getText();
             try{
                 send(str);
             } catch (IOException e) {
@@ -161,6 +161,9 @@ class chatClient extends Frame implements ActionListener{
             }
 
         }
+
+    }
+    public void textValueChanged(TextEvent te){
 
     }
     public static void main(String args[]){

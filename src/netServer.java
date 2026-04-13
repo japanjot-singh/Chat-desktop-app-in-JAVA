@@ -86,10 +86,10 @@ class netServer extends Frame implements ActionListener,met {
 
     }
 }
-class ChatNow extends Frame implements ActionListener,met{
+class ChatNow extends Frame implements ActionListener,met,TextListener{
     Label ly,lo;
 
-    TextField ts,tr;
+    TextArea tas,tar;
 
     Button se,re;
 
@@ -103,21 +103,21 @@ class ChatNow extends Frame implements ActionListener,met{
         ly=new Label("Send");
         lo=new Label("Recieve");
 
-        ts=new TextField(30);
-        tr=new TextField(30);
+        tas=new TextArea(10,5);
+        tar=new TextArea(10,5);
 
         se=new Button("Send");
         re=new Button("Recieve");
 
         this.add(ly);
-        this.add(ts);
+        this.add(tas);
         this.add(se);
         this.add(lo);
-        this.add(tr);
+        this.add(tar);
         this.add(re);
 
-        ts.addActionListener(this);
-        tr.addActionListener(this);
+        tas.addTextListener(this);
+        tar.addTextListener(this);
         se.addActionListener(this);
         re.addActionListener(this);
 
@@ -140,13 +140,13 @@ class ChatNow extends Frame implements ActionListener,met{
 
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource() == se){
-            if(ts.getText().isEmpty()){
+            if(tas.getText().isEmpty()){
                 emptyFlag=true;
                 repaint();
             }
 
             if(!emptyFlag){
-                String te=ts.getText();
+                String te=tas.getText();
                 try{
                     send(te);
                 } catch (IOException e) {
@@ -173,13 +173,16 @@ class ChatNow extends Frame implements ActionListener,met{
         BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
         String sr;
         while((sr=br.readLine()) != null){
-            tr.setText(sr);
+            tar.setText(sr);
         }
     }
     public void paint(Graphics g){
         if(emptyFlag){
             g.drawString("please type message",250,250);
         }
+    }
+    public void textValueChanged(TextEvent te){
+
     }
     public static void main(String args[]){
 
