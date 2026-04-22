@@ -60,9 +60,6 @@ class netClient extends Frame implements ActionListener {
             }
         }
     }
-    public void send(){
-
-    }
     public void paint(Graphics g){
         if(connFlag  && startFlag ){
             g.drawString("Connection Established ",230,230);
@@ -74,9 +71,6 @@ class netClient extends Frame implements ActionListener {
         f1.setTitle("Private Chat Client");
         f1.setSize(500,500);
         f1.setVisible(true);
-    }
-    public void recieve(){
-
     }
 }
 class chatClient extends Frame implements ActionListener,TextListener{
@@ -127,9 +121,6 @@ class chatClient extends Frame implements ActionListener,TextListener{
         while((sr=br.readLine()) != null){
             tar.append(sr +"\n");
         }
-    }
-    public void checkconn(){
-
     }
     public void send(String str) throws IOException{
         PrintWriter ps=new PrintWriter(s.getOutputStream(),true);

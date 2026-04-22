@@ -40,10 +40,6 @@ class netServer extends Frame implements ActionListener {
         s=ss.accept();
         connFlag=true;
     }
-    public void send(String str) throws IOException{
-        PrintWriter ps=new PrintWriter(s.getOutputStream(),true);
-        ps.println(str);
-    }
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == bcon){
             try{
@@ -77,9 +73,6 @@ class netServer extends Frame implements ActionListener {
         f1.setTitle("Private Chat");
         f1.setSize(500,500);
         f1.setVisible(true);
-    }
-    public void recieve(){
-
     }
 }
 class ChatNow extends Frame implements ActionListener,TextListener{
@@ -123,11 +116,7 @@ class ChatNow extends Frame implements ActionListener,TextListener{
             }
         });
     }
-    public  void connection() throws IOException{
-        ServerSocket ss=new ServerSocket(4567);
-        Socket s=ss.accept();
 
-    }
     public void send(String str) throws IOException{
         PrintWriter ps=new PrintWriter(s.getOutputStream(),true);
         ps.println(str);
