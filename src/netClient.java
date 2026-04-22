@@ -2,12 +2,7 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
-interface metc{
-    void checkConn();
-    void recieve();
-    void send();
-}
-class netClient extends Frame implements ActionListener,metc {
+class netClient extends Frame implements ActionListener {
     Label l1;
     static Socket s;
 

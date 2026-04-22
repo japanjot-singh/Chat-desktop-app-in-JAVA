@@ -3,12 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
 
-interface met{
-    void connection() throws IOException;
-    void send(String str) throws IOException;
-    void recieve() throws IOException;
-}
-class netServer extends Frame implements ActionListener,met {
+
+class netServer extends Frame implements ActionListener {
     Label l1;
 
     Button bcon;
@@ -86,7 +82,7 @@ class netServer extends Frame implements ActionListener,met {
 
     }
 }
-class ChatNow extends Frame implements ActionListener,met,TextListener{
+class ChatNow extends Frame implements ActionListener,TextListener{
     Label ly,lo;
 
     TextArea tas,tar;
