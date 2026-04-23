@@ -4,9 +4,15 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 class netClient extends Frame implements ActionListener {
     Label l1;
     static Socket s;
+    static String Cname;
 
     Button bcon;
     Button bch;
@@ -67,15 +73,16 @@ class netClient extends Frame implements ActionListener {
             g.drawString("Connection Established ",230,230);
         }
     }
-    public static void startC(){
+    public static void startC(String Cname){
         netClient f1=new netClient();
+        netClient.Cname=Cname;
         f1.setTitle("Private Chat Client");
         f1.setSize(500,500);
         f1.setVisible(true);
     }
 
     public static void main(String args[]){
-        startC();
+        startC(Cname);
 
     }
 }
@@ -116,9 +123,33 @@ class chatClient extends Frame implements ActionListener,TextListener{
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
+                saveHistoryC();
                 System.exit(0);
             }
         });
+    }
+    public void saveHistoryC() {
+        try {
+            Connection conh = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Akaal-hi-akaal1699@");
+            Statement stmth = conh.createStatement();
+            System.out.println("Connected Successfully!");
+            String sentText = tas.getText();
+            String receivedText = tar.getText();
+
+            String query1 = "UPDATE chatHistory SET sent='" + sentText +
+                    "' WHERE username='" + netClient.Cname + "' AND type='client'";
+
+            String query2 = "UPDATE chatHistory SET received='" + receivedText +
+                    "' WHERE username='" + netClient.Cname + "' AND type='client'";
+
+            stmth.executeUpdate(query1);
+            stmth.executeUpdate(query2);
+
+            System.out.println("Chat saved successfully!");
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
     }
     public void recieve() throws IOException
     {

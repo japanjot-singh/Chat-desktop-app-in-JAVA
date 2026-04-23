@@ -254,10 +254,10 @@ class FrameLON extends Frame implements ActionListener{
                 }
                 if(fol){
                     if(ty.equalsIgnoreCase("server")){
-                        netServer.start();
+                        netServer.start(ch);
                     }
                     else{
-                        netClient.startC();
+                        netClient.startC(ch);
                     }
 
                 }

@@ -4,6 +4,10 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 class netServer extends Frame implements ActionListener {
@@ -13,6 +17,7 @@ class netServer extends Frame implements ActionListener {
     Button bconvo;
     ServerSocket ss;
     Socket s;
+    static String name;
 
 
     boolean connFlag=false;
@@ -69,7 +74,9 @@ class netServer extends Frame implements ActionListener {
             g.drawString("Connection Established",230,230);
         }
     }
-    public static void start(){
+    public static void start(String name)
+    {
+        netServer.name=name;
         netServer f1=new netServer();
         f1.setTitle("Private Chat");
         f1.setSize(500,500);
@@ -77,7 +84,7 @@ class netServer extends Frame implements ActionListener {
     }
 
     public static void main(String args[]){
-        start();
+        start(name);
     }
 }
 class ChatNow extends Frame implements ActionListener,TextListener{
@@ -117,6 +124,7 @@ class ChatNow extends Frame implements ActionListener,TextListener{
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
+                saveHistory();
                 System.exit(0);
             }
         });
@@ -126,6 +134,29 @@ class ChatNow extends Frame implements ActionListener,TextListener{
         PrintWriter ps=new PrintWriter(s.getOutputStream(),true);
         ps.println(str);
 
+    }
+    public void saveHistory() {
+        try {
+            Connection conh = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Akaal-hi-akaal1699@");
+            Statement stmth = conh.createStatement();
+            System.out.println("Connected Successfully!");
+            String sentText = tas.getText();
+            String receivedText = tar.getText();
+
+            String query1 = "UPDATE chatHistory SET sent='" + sentText +
+                    "' WHERE username='" + netServer.name + "' AND type='server'";
+
+            String query2 = "UPDATE chatHistory SET received='" + receivedText +
+                    "' WHERE username='" + netServer.name + "' AND type='server'";
+
+            stmth.executeUpdate(query1);
+            stmth.executeUpdate(query2);
+
+            System.out.println("Chat saved successfully!");
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
     }
 
     public void actionPerformed(ActionEvent ae){
