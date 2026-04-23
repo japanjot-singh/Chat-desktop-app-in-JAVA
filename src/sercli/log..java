@@ -64,13 +64,14 @@ class log extends Frame implements ItemListener,ActionListener
 }
 class FrameCRN extends Frame implements ActionListener{
     Label lu,lp,lt;
+    boolean dataFlag=false;
     TextField tu,tp,tt;
 
     String Tuser,Tpass,Ttype;
 
     static String  url,user,pass;
 
-    Button bs;
+    Button bs,back;
 
     boolean foundUser=false, foundType=false;
 
@@ -94,6 +95,7 @@ class FrameCRN extends Frame implements ActionListener{
         tp.setEchoChar('*');
 
         bs=new Button("Save");
+        back=new Button("Back to Log-In");
 
         this.add(lu);
         this.add(tu);
@@ -102,11 +104,13 @@ class FrameCRN extends Frame implements ActionListener{
         this.add(lt);
         this.add(tt);
         this.add(bs);
+        this.add(back);
 
         tu.addActionListener(this);
         tp.addActionListener(this);
         bs.addActionListener(this);
         tt.addActionListener(this);
+        back.addActionListener(this);
 
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e){
@@ -139,24 +143,25 @@ class FrameCRN extends Frame implements ActionListener{
                 }
                 if(!foundUser && !foundType){
                     addData(Tuser,Tpass,Ttype,stmt);
-                    if(Ttype.equalsIgnoreCase("server")){
-                        netServer.start();
-                    }
-                    else{
-                        netClient.startC();
-                    }
-
+                    dataFlag=true;
+                    repaint();
                 }
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+        if(ae.getSource()== back){
+            this.dispose();
+        }
 
     }
     public void paint(Graphics g){
         if(foundUser && foundType){
             g.drawString("Already Taken",130,130);
+        }
+        if(dataFlag){
+            g.drawString("Account created now hit back",130,170);
         }
 
     }
