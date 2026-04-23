@@ -1,3 +1,5 @@
+package sercli;
+
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -65,12 +67,16 @@ class netClient extends Frame implements ActionListener {
             g.drawString("Connection Established ",230,230);
         }
     }
-
-    public static void main(String args[]){
+    public static void startC(){
         netClient f1=new netClient();
         f1.setTitle("Private Chat Client");
         f1.setSize(500,500);
         f1.setVisible(true);
+    }
+
+    public static void main(String args[]){
+        startC();
+
     }
 }
 class chatClient extends Frame implements ActionListener,TextListener{
