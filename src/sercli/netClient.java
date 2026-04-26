@@ -136,15 +136,10 @@ class chatClient extends Frame implements ActionListener,TextListener{
             String sentText = tas.getText();
             String receivedText = tar.getText();
 
-            String query1 = "UPDATE chatHistory SET sent='" + sentText +
-                    "' WHERE username='" + netClient.Cname + "' AND type='client'";
-
-            String query2 = "UPDATE chatHistory SET received='" + receivedText +
-                    "' WHERE username='" + netClient.Cname + "' AND type='client'";
+            String query1 = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
+                    + netClient.Cname + "', 'client', '" + tas.getText() + "', '" + tar.getText() + "', NOW())";
 
             stmth.executeUpdate(query1);
-            stmth.executeUpdate(query2);
-
             System.out.println("Chat saved successfully!");
 
         } catch (SQLException se) {

@@ -17,7 +17,7 @@ class netServer extends Frame implements ActionListener {
     Button bconvo;
     ServerSocket ss;
     Socket s;
-    static String name;
+    static String uname;
 
 
     boolean connFlag=false;
@@ -76,7 +76,7 @@ class netServer extends Frame implements ActionListener {
     }
     public static void start(String name)
     {
-        netServer.name=name;
+        netServer.uname =name;
         netServer f1=new netServer();
         f1.setTitle("Private Chat");
         f1.setSize(500,500);
@@ -84,7 +84,7 @@ class netServer extends Frame implements ActionListener {
     }
 
     public static void main(String args[]){
-        start(name);
+        start(uname);
     }
 }
 class ChatNow extends Frame implements ActionListener,TextListener{
@@ -143,15 +143,10 @@ class ChatNow extends Frame implements ActionListener,TextListener{
             String sentText = tas.getText();
             String receivedText = tar.getText();
 
-            String query1 = "UPDATE chatHistory SET sent='" + sentText +
-                    "' WHERE username='" + netServer.name + "' AND type='server'";
-
-            String query2 = "UPDATE chatHistory SET received='" + receivedText +
-                    "' WHERE username='" + netServer.name + "' AND type='server'";
+            String query1 = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
+                    + netServer.uname + "', 'server', '" + tas.getText() + "', '" + tar.getText() + "', NOW())";
 
             stmth.executeUpdate(query1);
-            stmth.executeUpdate(query2);
-
             System.out.println("Chat saved successfully!");
 
         } catch (SQLException se) {
