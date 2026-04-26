@@ -18,6 +18,7 @@ class netServer extends Frame implements ActionListener {
     ServerSocket ss;
     Socket s;
     static String uname;
+    static String clientName;
 
 
     boolean connFlag=false;
@@ -45,6 +46,8 @@ class netServer extends Frame implements ActionListener {
     public  void connection() throws IOException{
         ss=new ServerSocket(4567);
         s=ss.accept();
+        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        clientName = br.readLine();
         connFlag=true;
     }
     public void actionPerformed(ActionEvent ae) {
@@ -62,7 +65,7 @@ class netServer extends Frame implements ActionListener {
 
         if (ae.getSource() == bconvo){
             if(chatFlag){
-                ChatNow cn=new ChatNow(s);
+                ChatNow cn=new ChatNow(s,clientName);
                 cn.setTitle("server");
                 cn.setSize(500,500);
                 cn.setVisible(true);
@@ -88,6 +91,7 @@ class netServer extends Frame implements ActionListener {
     }
 }
 class ChatNow extends Frame implements ActionListener,TextListener{
+    String clientName;
     Label ly,lo;
 
     TextArea tas,tar;
@@ -98,8 +102,9 @@ class ChatNow extends Frame implements ActionListener,TextListener{
     Socket s;
     boolean emptyFlag=false;
     boolean textFlag=false;
-    ChatNow(Socket s){
+    ChatNow(Socket s,String clientName){
         this.s=s;
+        this.clientName=clientName;
         this.setLayout(new FlowLayout());
         ly=new Label("Send");
         lo=new Label("Recieve");
@@ -143,10 +148,14 @@ class ChatNow extends Frame implements ActionListener,TextListener{
             String sentText = tas.getText();
             String receivedText = tar.getText();
 
-            String query1 = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
+            String queryServer = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
                     + netServer.uname + "', 'server', '" + tas.getText() + "', '" + tar.getText() + "', NOW())";
 
-            stmth.executeUpdate(query1);
+            String queryClient = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
+                    + clientName + "', 'client', '" + receivedText + "', '" + sentText + "', NOW())";
+
+            stmth.executeUpdate(queryServer);
+            stmth.executeUpdate(queryClient);
             System.out.println("Chat saved successfully!");
 
         } catch (SQLException se) {
@@ -201,6 +210,8 @@ class ChatNow extends Frame implements ActionListener,TextListener{
 
     }
     public static void main(String args[]){
+        System.out.println(netClient.Cname);
+
 
     }
 }

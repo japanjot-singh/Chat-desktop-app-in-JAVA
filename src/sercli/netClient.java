@@ -42,6 +42,8 @@ class netClient extends Frame implements ActionListener {
     public void checkConn(){
         try{
             s=new Socket("localhost",4567);
+            PrintWriter ps = new PrintWriter(s.getOutputStream(), true);
+            ps.println(Cname);
             connFlag=true;
 
 
@@ -123,12 +125,12 @@ class chatClient extends Frame implements ActionListener,TextListener{
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                saveHistoryC();
+                //saveHistoryC();
                 System.exit(0);
             }
         });
     }
-    public void saveHistoryC() {
+    /*public void saveHistoryC() {
         try {
             Connection conh = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Akaal-hi-akaal1699@");
             Statement stmth = conh.createStatement();
@@ -145,7 +147,7 @@ class chatClient extends Frame implements ActionListener,TextListener{
         } catch (SQLException se) {
             se.printStackTrace();
         }
-    }
+    }*/
     public void recieve() throws IOException
     {
         BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
