@@ -6,7 +6,7 @@ This is a **client-server chat application** built using **Java AWT and Socket P
 
 It enables real-time communication between a server and a client over a network.
 
-The project is currently in its **foundational stage** and is being actively developed toward a **multi-user chat system with database integration and improved GUI**.
+The project has now been extended with **authentication and database integration**, moving toward a **multi-user chat system with persistent chat history and improved architecture**.
 
 ---
 
@@ -17,6 +17,10 @@ The project is currently in its **foundational stage** and is being actively dev
 * ✅ Send and receive messages in real-time
 * ✅ Separate client and server modules
 * ✅ Multi-threaded message receiving
+* ✅ User Login / Signup system (JDBC + MySQL)
+* ✅ Role-based access (Server / Client)
+* ✅ Chat history stored in database
+* ✅ Chat auto-saved on exit
 
 ---
 
@@ -25,29 +29,15 @@ The project is currently in its **foundational stage** and is being actively dev
 * **Language:** Java
 * **GUI:** AWT
 * **Networking:** Socket Programming
+* **Database:** MySQL
+* **JDBC:** Database Connectivity
 * **I/O:** BufferedReader, PrintWriter
-
----
-
-## ▶️ How to Run
-
-### 1️⃣ Run Server
-
-```
-javac NetworkPro.java
-java NetworkPro
-```
-
-### 2️⃣ Run Client
-
-```
-javac NetworkProClient.java
-java NetworkProClient
-```
+* **Concepts:** Multithreading, Client-Server Architecture
 
 ---
 
 
+---
 
 ## 🔥 Future Enhancements
 
@@ -57,11 +47,11 @@ java NetworkProClient
 * Broadcast messaging system
 * User session handling
 
-### 🗄️ Database Integration
+### 🗄️ Database Improvements
 
-* Store user credentials (login/signup)
-* Save chat history
-* MySQL / PostgreSQL
+* Secure credential storage (hashing passwords)
+* Better chat history structure (message-wise storage)
+* Query optimization
 
 ### 🎨 GUI Improvements
 
@@ -69,10 +59,11 @@ java NetworkProClient
 * Modern chat interface (like WhatsApp/Discord)
 * Message bubbles, timestamps
 
-### 🔐 Authentication System
+### 🔐 Security Enhancements
 
-* User login/signup
-* Secure communication
+* Input validation
+* Protection against SQL injection
+* Secure authentication flow
 
 ### 🌐 Advanced Features
 
@@ -87,8 +78,11 @@ java NetworkProClient
 * Socket Programming
 * Client-Server Architecture
 * Real-time communication
+* JDBC Integration
+* Database Design (Keys, Constraints)
 * GUI development in Java
 * Multithreading
+* System Design Thinking
 
 ---
 
