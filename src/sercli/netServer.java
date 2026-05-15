@@ -130,7 +130,9 @@ class ChatNow extends Frame implements ActionListener,TextListener{
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
                 saveHistory();
-                System.exit(0);
+                confirmClose cc=new confirmClose();
+                cc.setSize(250,250);
+                cc.setVisible(true);
             }
         });
     }
@@ -213,5 +215,31 @@ class ChatNow extends Frame implements ActionListener,TextListener{
         System.out.println(netClient.Cname);
 
 
+    }
+}
+class confirmClose extends Frame implements ActionListener{
+    Label lc;
+    Button bc,bx;
+    confirmClose(){
+        this.setLayout(new FlowLayout());
+        lc=new Label("Are you sure?");
+        bc=new Button("cancel");
+        bx=new Button("Exit");
+
+        this.add(lc);
+        this.add(bc);
+        this.add(bx);
+
+        bc.addActionListener(this);
+        bx.addActionListener(this);
+
+    }
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource() == bc){
+            this.dispose();
+        }
+        else if(e.getSource() == bx){
+            System.exit(0);
+        }
     }
 }

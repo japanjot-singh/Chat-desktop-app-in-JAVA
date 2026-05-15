@@ -127,6 +127,9 @@ class chatClient extends Frame implements ActionListener,TextListener{
             public void windowClosing(WindowEvent e){
                 //saveHistoryC();
                 System.exit(0);
+                confirmCloseClient ccc=new confirmCloseClient();
+                ccc.setSize(250,250);
+                ccc.setVisible(true);
             }
         });
     }
@@ -188,5 +191,31 @@ class chatClient extends Frame implements ActionListener,TextListener{
     }
     public static void main(String args[]){
 
+    }
+}
+class confirmCloseClient extends Frame implements ActionListener{
+    Label lc;
+    Button bc,bx;
+    confirmCloseClient(){
+        this.setLayout(new FlowLayout());
+        lc=new Label("Are you sure?");
+        bc=new Button("cancel");
+        bx=new Button("Exit");
+
+        this.add(lc);
+        this.add(bc);
+        this.add(bx);
+
+        bc.addActionListener(this);
+        bx.addActionListener(this);
+
+    }
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource() == bc){
+            this.dispose();
+        }
+        else if(e.getSource() == bx){
+            System.exit(0);
+        }
     }
 }
