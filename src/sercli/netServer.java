@@ -149,17 +149,17 @@ class ChatNow extends Frame implements ActionListener,TextListener{
             PreparedStatement pstmt=conh.prepareStatement(queryServer);
             pstmt.setString(1, netServer.uname);
             pstmt.setString(2, "server");
-            pstmt.setString(3, tas.getText());
-            pstmt.setString(4, tar.getText());
-            pstmt.executeUpdate(queryServer);
+            pstmt.setString(3, sentText);
+            pstmt.setString(4, receivedText);
+            pstmt.executeUpdate();
 
             String queryClient="INSERT INTO MESSAGES_HISTORY(USERNAME, TYPE, SENT, RECIEVED, TIME) VALUES (?, ?, ?, ?, NOW())";
             PreparedStatement pstmt1=conh.prepareStatement(queryClient);
-            pstmt.setString(1, clientName);
-            pstmt.setString(2, "client");
-            pstmt.setString(3, tar.getText());
-            pstmt.setString(4, tas.getText());
-            pstmt.executeUpdate();
+            pstmt1.setString(1, clientName);
+            pstmt1.setString(2, "client");
+            pstmt1.setString(3, receivedText);
+            pstmt1.setString(4, sentText);
+            pstmt1.executeUpdate();
 
             System.out.println("Chat saved successfully!");
 
