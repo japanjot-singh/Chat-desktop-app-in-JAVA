@@ -4,10 +4,7 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 
 class netServer extends Frame implements ActionListener {
@@ -144,20 +141,26 @@ class ChatNow extends Frame implements ActionListener,TextListener{
     }
     public void saveHistory() {
         try {
-            Connection conh = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Akaal-hi-akaal1699@");
-            Statement stmth = conh.createStatement();
+            Connection conh = DriverManager.getConnection("jdbc:mysql://localhost:3306/CHATAPPDB", "root", "Akaal-hi-akaal1699@");
             System.out.println("Connected Successfully!");
             String sentText = tas.getText();
             String receivedText = tar.getText();
+            String queryServer="INSERT INTO MESSAGES_HISTORY(USERNAME, TYPE, SENT, RECIEVED, TIME) VALUES (?, ?, ?, ?, NOW())";
+            PreparedStatement pstmt=conh.prepareStatement(queryServer);
+            pstmt.setString(1, netServer.uname);
+            pstmt.setString(2, "server");
+            pstmt.setString(3, tas.getText());
+            pstmt.setString(4, tar.getText());
+            pstmt.executeUpdate(queryServer);
 
-            String queryServer = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
-                    + netServer.uname + "', 'server', '" + tas.getText() + "', '" + tar.getText() + "', NOW())";
+            String queryClient="INSERT INTO MESSAGES_HISTORY(USERNAME, TYPE, SENT, RECIEVED, TIME) VALUES (?, ?, ?, ?, NOW())";
+            PreparedStatement pstmt1=conh.prepareStatement(queryClient);
+            pstmt.setString(1, clientName);
+            pstmt.setString(2, "client");
+            pstmt.setString(3, tar.getText());
+            pstmt.setString(4, tas.getText());
+            pstmt.executeUpdate();
 
-            String queryClient = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
-                    + clientName + "', 'client', '" + receivedText + "', '" + sentText + "', NOW())";
-
-            stmth.executeUpdate(queryServer);
-            stmth.executeUpdate(queryClient);
             System.out.println("Chat saved successfully!");
 
         } catch (SQLException se) {

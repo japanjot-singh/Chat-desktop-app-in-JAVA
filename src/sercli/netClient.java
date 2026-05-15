@@ -126,7 +126,6 @@ class chatClient extends Frame implements ActionListener,TextListener{
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
                 //saveHistoryC();
-                System.exit(0);
                 confirmCloseClient ccc=new confirmCloseClient();
                 ccc.setSize(250,250);
                 ccc.setVisible(true);
@@ -141,7 +140,7 @@ class chatClient extends Frame implements ActionListener,TextListener{
             String sentText = tas.getText();
             String receivedText = tar.getText();
 
-            String query1 = "INSERT INTO chatHistory (username, type, sent, received, time) VALUES ('"
+            String query1 = "INSERT INTO MESSAGES_HISTORY (username, type, sent, received, time) VALUES ('"
                     + netClient.Cname + "', 'client', '" + tas.getText() + "', '" + tar.getText() + "', NOW())";
 
             stmth.executeUpdate(query1);

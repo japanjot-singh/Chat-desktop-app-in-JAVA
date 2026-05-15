@@ -46,13 +46,13 @@ class log extends Frame implements ItemListener,ActionListener
 
     public void itemStateChanged(ItemEvent ie){
         if(ie.getSource() == cc){
-            FrameCRN fc=new FrameCRN("jdbc:mysql://localhost:3306/test","root","Akaal-hi-akaal1699@");
+            FrameCRN fc=new FrameCRN("jdbc:mysql://localhost:3306/CHATAPPDB","root","Akaal-hi-akaal1699@");
             fc.setTitle("Create Account");
             fc.setSize(400,400);
             fc.setVisible(true);
         }
         if(ie.getSource() == cs){
-            FrameLON fl=new FrameLON("jdbc:mysql://localhost:3306/test","root","Akaal-hi-akaal1699@");
+            FrameLON fl=new FrameLON("jdbc:mysql://localhost:3306/CHATAPPDB","root","Akaal-hi-akaal1699@");
             fl.setTitle("Log-In");
             fl.setSize(400,400);
             fl.setVisible(true);
@@ -127,9 +127,12 @@ class FrameCRN extends Frame implements ActionListener{
 
             try{
                 Connection con=DriverManager.getConnection(url,user,pass);
-                Statement stmt=con.createStatement();
                 System.out.println("Connected Successfully!");
-                ResultSet rs1= stmt.executeQuery("SELECT username,type FROM accountData");
+                String checkQuery="SELECT USERNAME,TYPE FROM END_USER_DETAILS WHERE USERNAME=? AND TYPE=?";
+                PreparedStatement pstmt=con.prepareStatement(checkQuery);
+                pstmt.setString(1, Tuser);
+                pstmt.setString(2, Ttype);
+                ResultSet rs1 = pstmt.executeQuery();
                 while (rs1.next()){
                     cch=rs1.getString("username");
                     cch2=rs1.getString("type");
@@ -142,7 +145,7 @@ class FrameCRN extends Frame implements ActionListener{
                     }
                 }
                 if(!foundUser && !foundType){
-                    addData(Tuser,Tpass,Ttype,stmt);
+                    addData(Tuser,Tpass,Ttype,con);
                     dataFlag=true;
                     repaint();
                 }
@@ -166,11 +169,15 @@ class FrameCRN extends Frame implements ActionListener{
 
     }
 
-    public void addData(String au,String ap,String at,Statement stmt){
+    public void addData(String au,String ap,String at,Connection con){
 
-        String query="INSERT INTO accountData VALUES('"+au+"','"+ap+"','"+at+"')";
+        String query="INSERT INTO END_USER_DETAILS(USERNAME,PASSWORD,TYPE) VALUES(?,?,?)";
         try{
-            int NewEntry=stmt.executeUpdate(query);
+            PreparedStatement pstmt1=con.prepareStatement(query);
+            pstmt1.setString(1,au);
+            pstmt1.setString(2,ap);
+            pstmt1.setString(3,at);
+            int NewEntry=pstmt1.executeUpdate();
         }
         catch (SQLException se){
             se.printStackTrace();
@@ -236,10 +243,13 @@ class FrameLON extends Frame implements ActionListener{
 
             try{
                 Connection con=DriverManager.getConnection(lurl,luser,lpass);
-                Statement stmt=con.createStatement();
 
-                String query="SELECT username,password,type FROM accountData";
-                ResultSet rs= stmt.executeQuery(query);
+                String query="SELECT USERNAME,PASSWORD,TYPE FROM END_USER_DETAILS WHERE USERNAME=? AND PASSWORD=? AND TYPE=?";
+                PreparedStatement pstmt2=con.prepareStatement(query);
+                pstmt2.setString(1,lu);
+                pstmt2.setString(2,lp);
+                pstmt2.setString(3,lt);
+                ResultSet rs= pstmt2.executeQuery();
 
                 while(rs.next()){
                      ch=rs.getString("username");
